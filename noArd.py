@@ -6,54 +6,66 @@ Created on Mon Aug 23 12:58:09 2021
 """
 
 #import required libraries
-from tkinter import *
-from tkinter import ttk
 import json
 import time
 import serial as serial
 import numpy
 import math
-
-
-#Create an instance of Tkinter frame
-win= Tk()
+import pickle
 
 Nodes = {}
 
-data_JSON =  """
-{
-	"node": "1",
-	"data": {
-		"time": "12:20",
-		"x-axis": "1",
-		"y-axis": "2",
-        "z-axis": "3"
-	}
-}
-"""
-temp = 1
+# data_JSON =  """
+# {
+# 	"node": "1",
+# 	"data": {
+# 		"time": "1200",
+# 		"x-axis": "1",
+# 		"y-axis": "2",
+#         "z-axis": "3",
+#         "Tx": "2",
+#         "Ty": "3"
+# 	}
+# }
+# """
+
+f=open("nodes.txt","rb")
+Nodes=pickle.load(f)
+f.close()
+
 #Set the geometry of the window
-win.geometry("250x750")
-win.title("Rock Wall")
+
+def checkNodeNumber(nodeNumber):
+    if nodeNumber in Nodes.keys():
+        return
+    else:
+        dataList = []
+        Nodes[nodeNumber] = dataList
+        return
+
+
 def storeJSON(value):   
     nodeNumber = int(value['node'])
-    print(nodeNumber)
-    print("4")
-    if nodeNumber in Nodes.keys():
-        data = value["data"]
-        myList = Nodes[nodeNumber]
-        myList.insert(0,data)
-        Nodes[nodeNumber] = myList
-        print("5")
-    else:
-        myList = []
-        Nodes[nodeNumber] = myList
-        print("6")
+    checkNodeNumber(nodeNumber)
+    dataJ = value["data"]
+    data = {}
+    data["time"] =  int(dataJ["time"])
+    data["x-axis"] = float(dataJ["x-axis"])
+    data["y-axis"] = float(dataJ["y-axis"])
+    data["z-axis"] = float(dataJ["z-axis"])
+    data["Tx"] = float(dataJ["Tx"])
+    data["Ty"] = float(dataJ["Ty"])
+    dataList = Nodes[nodeNumber]
+    dataList.insert(0,data)
+    Nodes[nodeNumber] = dataList
+
+        
     
-while temp <4:
-        value = json.loads(data_JSON)
-        storeJSON(value) 
-        temp += 1
+# while temp <4:
+#         value = json.loads(data_JSON)
+#         storeJSON(value) 
+#         temp += 1
+
 
 cal = 10
 # function to open a new window
@@ -63,33 +75,18 @@ cal = 10
 def greatestMag(List):
     greatest = magnitude(readData(List, 0))
     greatestIn = 0
-    last = FALSE
+    last = False
     length = len(List)
     for i in range(length):
         temp = magnitude(readData(List, i))
         if i == length:
-            last = TRUE
+            last = True
         if temp>greatest:
                 greatest=temp
                 greatestIn = i
     if last:
         return greatest             
 
-def storeJSON(value):   
-    nodeNumber = int(value['node'])
-    print(nodeNumber)
-    print("4")
-    if nodeNumber in Nodes.keys():
-        data = value["data"]
-        myList = Nodes[nodeNumber]
-        myList.insert(0,data)
-        Nodes[nodeNumber] = myList
-        print("5")
-    else:
-        myList = []
-        Nodes[nodeNumber] = myList
-        print("6")
-    
  
 def NodeListLen(nodeNumber):       
      if nodeNumber in Nodes.keys():
@@ -102,8 +99,7 @@ def readNode(nodeNumber):
         return Nodes[nodeNumber]
 
 def readTime(data):
-    myObject = json.loads(data)
-    time = myObject["time"]
+    time = data["time"]
     return time
 
 def totalRunTime():
@@ -123,11 +119,11 @@ def totalRunTime():
     totalTime=stop-start
     return totalTime
 
-def readList(myList):
-    return myList
+def readList(dataList):
+    return dataList
 
-def readData(myList, index):
-    data = json.dumps(myList[index])
+def readData(dataList, index):
+    data = (dataList[index])
     return data
 
 # def listSort(List):
@@ -136,7 +132,7 @@ def readData(myList, index):
 #     time = myObject["time"]
     
 def magnitude(data):    
-    myObject = json.loads(data)
+    myObject = (data)
     x = int(myObject["x-axis"])
     y = int(myObject["y-axis"])
     z = int(myObject["z-axis"])
@@ -154,53 +150,8 @@ def magnitude(data):
     # if value[0:8]=="Received":
     #     print(myObject)
     #     storeJSON(myObject)
-        
-def openNewWindow(node):
-    DataList = readNode(node)
-    greatest = greatestMag(DataList)
-    mag = greatest
-    index = 0
-    time = readTime(readData(DataList, index))
-    a = []
-    length = len(DataList)
-    for i in range(length):
-        a.insert(0,magnitude(readData(DataList,i)))
-    numpy.histogram(a, bins=length, range=None, normed=None, weights=None, density=None) 
-    # Toplevel object which will
-    # be treated as a new window
-    newWindow = Toplevel(win)
- 
-    # sets the title of the
-    # Toplevel widget
-    newWindow.title("New Window")
- 
-    # sets the geometry of toplevel
-    newWindow.geometry("200x200")
-    labelframe2= LabelFrame(newWindow)
-    canvas2= Canvas(labelframe2)
-    # A Label widget to show in toplevel
-    Label(newWindow,
-          text ="The peak force is : " + str(mag)).pack()
-    Label(newWindow,
-          text ="The time was : " + str(time)).pack()
-    ttk.Button(canvas2, text= "Hold ",command = openNewWindow).pack()
-
-
-#Create a LabelFrame
-labelframe= LabelFrame(win)
-
-#Define a canvas in the window
-canvas= Canvas(labelframe)
-canvas.pack(side=RIGHT, fill=BOTH, expand=1)
-
-labelframe.pack(fill= BOTH, expand= 1, padx= 30, pady=30)
-i = 1
-
-#Create Button widget in Canvas
-for node in Nodes.keys():
-   ttk.Button(canvas, text= "Hold " +str(node),command = openNewWindow((node)).pack()
-
-win.mainloop()
-
-        
-        
+    
+print(Nodes)
+f=open("nodes.txt","wb")
+pickle.dump(Nodes,f)
+f.close()
