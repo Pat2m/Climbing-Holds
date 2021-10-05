@@ -4,17 +4,22 @@ class GUIWall:
     def __init__(self):
         print("created Wall 1")
         
-    def btn_clicked():
+    def btn_clicked(self):
         print("Button Clicked")
-        os.system('noArd.py')
+        self.quit()
+    
+    def quit(self):
+        # code to exit
+        global window
+        self.window.destroy()
     
     def mainWindow(self):
-        window = Tk()
+        self.window = Tk()
         
-        window.geometry("507x788")
-        window.configure(bg = "#ffffff")
+        self.window.geometry("507x788")
+        self.window.configure(bg = "#ffffff")
         canvas = Canvas(
-            window,
+            self.window,
             bg = "#ffffff",
             height = 788,
             width = 507,
@@ -49,5 +54,5 @@ class GUIWall:
             width = 98,
             height = 56)
         
-        window.resizable(False, False)
-        window.mainloop()
+        self.window.resizable(False, False)
+        self.window.mainloop()
