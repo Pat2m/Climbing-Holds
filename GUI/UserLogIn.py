@@ -10,35 +10,42 @@ import os
 
 class Login:
     
-    def __init__():
-        f=open("pickled.txt","rb")
-        d=pickle.load(f)
-        f.close()
+    def __init__(self):
+        print("Login Service Started")
         
-    def checkUserExist(user,d):
+    def loadUsers(self):
+        f=open("pickled.txt","rb")
+        print(f)
+        d=pickle.load(f)
+        f.close()  
+        return d
+        
+    def checkUserExist(self,user,d):
         if user in d:
             print("That user already exsist")
             return True
         else:
             return False
         
-    def addUser(user,password):
+    def addUser(self,user,password):
         print("test 1")
         f=open("pickled.txt","wb")
-        dct={user:password}
+        dct=pickle.load(f)
+        dct[user] = password
         pickle.dump(dct,f)
         f.close()
         
         
-    def checkUser(user,password):
+    def checkUser(self,user,password):
         print("test 2")
-        if (checkUserExist(user, d)):
+        d=self.loadUsers()
+        if (self.checkUserExist(user,d)):
             if (d[user]==password):
                 return True
             else:
                 return False
         else:
-            addUser(user,password) #place holder
+            self.addUser(user,password) #place holder
         
     
     
