@@ -48,7 +48,7 @@ background = canvas.create_image(
 window.resizable(False, False)
 #
 #window.eval('tk::PlaceWindow . left')
-window.after(500, startUp)
+window.after(1500, startUp)
 window.mainloop()
     
 
