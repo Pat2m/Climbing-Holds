@@ -6,9 +6,9 @@ Created on Thu Sep 30 14:32:28 2021
 """
 import pickle
 import os
+from Data.User import *
 
-
-class Login:
+class LoginService:
     
     def __init__(self):
         print("Login Service Started")

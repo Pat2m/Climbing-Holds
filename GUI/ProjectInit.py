@@ -5,56 +5,59 @@ Created on Tue Oct  5 14:55:30 2021
 @author: Pat
 """
 
-from LogInPage import *
+from GUI.LogInPage import *
 from tkinter import *
     
     #Closes Current Window
+class StartUp():
     
-def quit():
-    # code to exit
-    global window
-    window.destroy()
+    def __init__(self):
+        print("Splash Screen Deployed")
+    
+    def quit(self):
+        # code to exit
+        self.window.destroy()
+        
+        
+    def startNext(self):
+        mainPage = LoginPage()
+        self.quit()
+        mainPage.mainWindow() 
+    
+    def startUp(self):
+        ###############################################################
+        self.window = Tk()
+        self.window.wm_overrideredirect(True)
+        ###############################################################
+        self.window.geometry("1080x810+400+150")
+        self.window.configure(bg = "#ffffff")
+        self.canvas = Canvas(
+            self.window,
+            bg = "#ffffff",
+            height = 810,
+            width = 1080,
+            bd = 0,
+            highlightthickness = 0,
+            relief = "ridge")
+        self.canvas.place(x = 0, y = 0)
+        ###############################################################
+        self.background_img = PhotoImage(file = f"GUI/WindowBits/splash.png")
+        self.background = self.canvas.create_image(
+                                        540.0, 405.0,
+                                        image=self.background_img)
+        ###############################################################
+        
+        ###############################################################
+        self.window.resizable(False, False)
+        #
+        #window.eval('tk::PlaceWindow . left')
+        self.window.after(1500, self.startNext)
+        self.window.mainloop()
+        
     
     
-def startUp():
-    mainPage = LoginPage()
-    quit()
-    mainPage.mainWindow() 
-
-
-###############################################################
-window = Tk()
-window.wm_overrideredirect(True)
-###############################################################
-window.geometry("1080x810+400+150")
-window.configure(bg = "#ffffff")
-canvas = Canvas(
-    window,
-    bg = "#ffffff",
-    height = 810,
-    width = 1080,
-    bd = 0,
-    highlightthickness = 0,
-    relief = "ridge")
-canvas.place(x = 0, y = 0)
-###############################################################
-background_img = PhotoImage(file = f"splash.png")
-background = canvas.create_image(
-                                540.0, 405.0,
-                                image=background_img)
-###############################################################
-
-###############################################################
-window.resizable(False, False)
-#
-#window.eval('tk::PlaceWindow . left')
-window.after(1500, startUp)
-window.mainloop()
     
-
-
-
-
-# logPage = LoginPage()
-# print ("Got 1")
-# logPage.mainWindow()     
+    
+    # logPage = LoginPage()
+    # print ("Got 1")
+    # logPage.mainWindow()     
