@@ -1,6 +1,6 @@
 from tkinter import *   
 
-class GUIWall:    
+class GUIWall():    
     def __init__(self):
         print("created Wall 1")
         
@@ -28,7 +28,7 @@ class GUIWall:
             relief = "ridge")
         canvas.place(x = 0, y = 0)
         
-        img0 = PhotoImage(file = f"img2.png")
+        img0 = PhotoImage(file = f"GUI/WindowBits/img2.png")
         b0 = Button(
             image = img0,
             borderwidth = 0,
@@ -41,7 +41,7 @@ class GUIWall:
             width = 98,
             height = 56)
         
-        img1 = PhotoImage(file = f"img1.png")
+        img1 = PhotoImage(file = f"GUI/WindowBits/img1.png")
         b1 = Button(
             image = img1,
             borderwidth = 0,

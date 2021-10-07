@@ -2,8 +2,8 @@ from tkinter import *
 import os
 import subprocess
 #import Login
-from wall1 import *
-from UserLogIn import * 
+from GUI.wall1 import *
+#from .UserLogIn import * 
 
 class LoginPage():
     
@@ -16,7 +16,7 @@ class LoginPage():
         # wallNumber = entry0
         # userName = entry1
         # password = entry2
-        log = Login()
+        #log = LoginService()
         
         ##########################S
         
@@ -62,12 +62,12 @@ class LoginPage():
             relief = "ridge")
         canvas.place(x = 0, y = 0)
         ###############################################################
-        background_img = PhotoImage(file = f"background.png")
+        background_img = PhotoImage(file = f"GUI/WindowBits/background.png")
         background = canvas.create_image(
                                         664.0, 512.0,
                                         image=background_img)
         ###############################################################
-        entry0_img = PhotoImage(file = f"img_textBox0.png")
+        entry0_img = PhotoImage(file = f"GUI/WindowBits/img_textBox0.png")
         entry0_bg = canvas.create_image(
                                         1115.0, 383.0,
                                         image = entry0_img)
@@ -82,7 +82,7 @@ class LoginPage():
             width = 258.0,
             height = 60)
         ###############################################################
-        entry1_img = PhotoImage(file = f"img_textBox1.png")
+        entry1_img = PhotoImage(file = f"GUI/WindowBits/img_textBox1.png")
         entry1_bg = canvas.create_image(
             1115.0, 502.0,
             image = entry1_img)
@@ -97,7 +97,7 @@ class LoginPage():
             width = 258.0,
             height = 60)
         ###############################################################
-        entry2_img = PhotoImage(file = f"img_textBox1.png")
+        entry2_img = PhotoImage(file = f"GUI/WindowBits/img_textBox1.png")
         entry2_bg = canvas.create_image(
             1115.0, 601.0,
             image = entry2_img)
@@ -112,7 +112,7 @@ class LoginPage():
             width = 258.0,
             height = 60)
         ###############################################################
-        img0 = PhotoImage(file = f"img0.png")
+        img0 = PhotoImage(file = f"GUI/WindowBits/img0.png")
         b0 = Button(
                     image = img0,
                     borderwidth = 0,
@@ -127,3 +127,10 @@ class LoginPage():
         ###############################################################
         self.window.resizable(False, False)
         self.window.mainloop()
+
+
+# =============================================================================
+#####TEST STARTUP####
+mainPage = LoginPage()
+mainPage.mainWindow() 
+# =============================================================================
