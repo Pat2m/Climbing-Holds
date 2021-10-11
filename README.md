@@ -14,12 +14,22 @@ Planned Structure:
         Success ==> brings user to home page
 
         Home Page: 
+           Feature List:
+           - Overall Stats
+           - Wall Ratings
+           - PR times for wall difficulty levels
+           -
+           Tabs:
+           - Overview
+           - Data Analytics
+           - Tips Suggestions
+           
 
 
         Wall History:
 
-    Options:
-    -Previous attemps
-      -Load previous data to analyze
-    -New attempt
-      ==>Creates New data dictionary for tracking and serializes data when run is complete
+            Options:
+            -Previous attemps
+              -Load previous data to analyze
+            -New attempt
+              ==>Creates New data dictionary for tracking and serializes data when run is complete
