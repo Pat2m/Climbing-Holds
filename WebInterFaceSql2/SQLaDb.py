@@ -1,15 +1,20 @@
 from flask import Flask, render_template, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
-from flask_scss import Scss
+from flask_assets import Environment, Bundle
+#Run pip install flask_assets
 #from Data import *
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
-Scss(app, static_dir='static', asset_dir='assets')
+assets = Environment(app)
+assets.url = app.static_url_path
+scss = Bundle('assets/scss/main.scss', filters='pyscss', output='all.css')
+assets.register('scss_all', scss)
 
 db =  SQLAlchemy(app)
+
 
 class User(db.Model):
     __tablename__ = 'User'
